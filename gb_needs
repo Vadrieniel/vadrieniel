@@ -1,0 +1,145 @@
+<head>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:light,regular,medium,thin,italic,mediumitalic,bold" title="roboto">
+	<script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+	<script>
+		function addCommas(nStr) {
+			nStr += '';
+			var x = nStr.split('.');
+			var x1 = x[0];
+			var x2 = x.length > 1 ? '.' + x[1] : '';
+			var rgx = /(\d+)(\d{3})/;
+			while (rgx.test(x1)) {
+				x1 = x1.replace(rgx, '$1' + '<span style="margin-left: 3px; margin-right: 3px;"/>' + '$2');
+			}
+			return x1 + x2;
+		}
+
+		window.onload = function(e){
+			// NUI Callback
+			window.addEventListener('message', function(event){
+				var item = event.data;
+
+				if(item.setfood == true)
+					document.getElementById("calories").innerHTML = "<div><font style='color: rgb(0, 125, 0); font-weight: 700; margin-right: 6px;'>\u{1F355}</font>" + addCommas(item.food);
+				if(item.setwater == true)
+					document.getElementById("water").innerHTML = "<div><font style='color: rgb(0, 125, 0); font-weight: 700; margin-right: 6px;'>\u{1F377}</font>" + addCommas(item.water);
+				if(item.setneeds == true)
+					document.getElementById("wc").innerHTML = "<div><font style='color: rgb(0, 125, 0); font-weight: 700; margin-right: 6px;'>\u{1F6BE}</font>" + addCommas(item.needs);
+				if(item.removeStartWindow == true){
+					$("#starter").remove();
+				}
+				if(item.setDisplay == true){
+					$("#food").css('opacity', item.display)
+				}
+			})
+		}
+	</script>
+
+	<style>
+		#container {
+			position: absolute;
+			top: 75%; 
+			float: right;
+			right: 85%;
+			width: 250px;
+		}
+		
+		#container2 {
+			position: absolute;
+			top: 73%; 
+			float: right;
+			right: 85%;
+			width: 250px;
+		}
+		
+		#container3 {
+			position: absolute;
+			top: 70.9%; 
+			float: right;
+			right: 85%;
+			width: 250px;
+		}
+		
+		.barre-soif { 
+			width: 100%;
+			position: absolute;
+			height: 10px;
+			padding: 2px;
+			opacity: 0.8;
+			background-color: #454545;
+		}
+
+		.barre-soif:before { 
+			content: '';
+			display: block;
+			position: absolute;
+			width: 80%;
+			height: 10px;
+			background: #00a2ff;
+		}
+
+		.barre-faim { 
+			width: 100%;
+			position: absolute;
+			height: 10px;
+			padding: 2px;
+			opacity: 0.8;
+			background-color: #454545;
+			margin-top: 1px;
+		}
+
+		.barre-faim:before { 
+			content: '';
+			display: block;
+			position: absolute;
+			width: 80%;
+			height: 10px;
+			background: #7b5528;
+		}
+		.barre-pipi { 
+			width: 100%;
+			position: absolute;
+			height: 10px;
+			padding: 2px;
+			opacity: 0.8;
+			background-color: #454545;
+			margin-top: 1px;
+		}
+
+		.barre-pipi:before { 
+			content: '';
+			display: block;
+			position: absolute;
+			width: 80%;
+			height: 10px;
+			background: #d7c500;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="starter" style="font-family: 'roboto'; color: white; position: absolute; left: 20%; top: 5%; width: 60%; background: rgba(40, 40, 40, 0.8)">
+
+	</div>
+	<div id="container">
+		<div class="barre-faim"></div>
+
+			<div id="calories"/>
+
+		</div>
+	</div>
+	<div id="container2">
+		<div class="barre-soif"></div>
+
+			<div id="water"/>
+
+		</div>
+	</div>
+	<div id="container3">
+		<div class="barre-pipi"></div>
+
+			<div id="wc"/>
+
+		</div>
+	</div>
+</body>
